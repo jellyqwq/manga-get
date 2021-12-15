@@ -68,7 +68,7 @@ def dogemanga_main(url=''):
     cop =  re.compile(r'(?:https|http)://dogemanga.com/(.{1})')
     # copname对url中漫画名字提取
     # copname = re.compile(r'(?:https|http)://dogemanga.com/.*?/(.*?)/')
-    # 网页类型m\p
+    # 网页类型m\p\q
     cop = re.findall(cop, url)
     # 漫画名
     # copname = re.findall(copname, url)

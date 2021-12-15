@@ -38,6 +38,6 @@ class Manga_save:
                     print(time.strftime("[%Y-%m-%d %H:%M:%S]", time.localtime()), picture_name, '\t', '白嫖成功')
                     time.sleep(random.uniform(0.1,1))
                 else:
-                    print(time.strftime("[%Y-%m-%d %H:%M:%S]", time.localtime()), i[0], '\t', '已存在')
+                    pass
             except:
                 continue
