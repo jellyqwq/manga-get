@@ -1,6 +1,6 @@
-__all__=['dagemanga', 'manga_save', 'requests_site']
+__all__=['dagemanga']
 from requests_site import requests_site
 
 
-from manga_save import manga_save
+from manga_save import Manga_save
 

@@ -4,7 +4,7 @@ import os, sys
 
 os.chdir(sys.path[0])
 
-def main(url=None):
+def main(url=''):
     start_time = time.time()
     url_analysis(url)
     end_time = time.time()

@@ -1,5 +1,6 @@
-def url_analysis(url=None):
+def url_analysis(url=''):
     import re
+    
     where_manga = re.compile(r'(?:https|http)://(?:www\.|)(.*?)\.com')
     mangasite = re.findall(where_manga, url)
 
