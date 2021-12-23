@@ -2,6 +2,8 @@ import requests
 import random
 import time
 import os
+from multiprocessing import Pool 
+from functools import partial
 
 class Manga_save:
     headers = {
@@ -25,19 +27,25 @@ class Manga_save:
         else:
             pass
         
+    def manga_download(self, i=None, exist_file=None, manga_save_format=None):
+        try:
+            if (i[0]+manga_save_format) not in exist_file[0]:
+                r = requests.get(url=i[1], headers=self.headers, timeout=10)
+                picture_name = i[0]
+                with open(exist_file[1] + picture_name + manga_save_format, 'wb') as f:
+                    f.write(r.content)
+                print(time.strftime("[%Y-%m-%d %H:%M:%S]", time.localtime()), picture_name, '\t', '白嫖成功')
+                time.sleep(random.uniform(0.1,1))
+            else:
+                print(time.strftime("[%Y-%m-%d %H:%M:%S]", time.localtime()), i[0], '\t', '已存在')
+        except:
+            pass
+    
     def manga_save(self, li_link=None, book_folder_name=None, chapter_folder_name=None, manga_save_format='.jpg'):
         exist_file = self.manga_save_path(book_folder_name=book_folder_name, chapter_folder_name=chapter_folder_name)
-        # 下载列表的格式为[漫画每一话名字,url]
-        for i in li_link:
-            try:
-                if (i[0]+manga_save_format) not in exist_file[0]:
-                    r = requests.get(url=i[1], headers=self.headers, timeout=10)
-                    picture_name = i[0]
-                    with open(exist_file[1] + picture_name + manga_save_format, 'wb') as f:
-                        f.write(r.content)
-                    print(time.strftime("[%Y-%m-%d %H:%M:%S]", time.localtime()), picture_name, '\t', '白嫖成功')
-                    time.sleep(random.uniform(0.1,1))
-                else:
-                    pass
-            except:
-                continue
+
+        par = partial(self.manga_download, exist_file=exist_file, manga_save_format=manga_save_format)
+        pool = Pool()
+        pool.map(par, li_link)
+        pool.close()
+        pool.join()
